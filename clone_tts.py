@@ -18,7 +18,7 @@ def main():
     ap.add_argument("--ref", required=True)
     ap.add_argument("--out", default="nest_clip")
     ap.add_argument("--lang", default="en")
-    ap.add_argument("--gain", type=float, default=2.5, help="audio volume multiplier (default 2.5)")
+    ap.add_argument("--gain", type=float, default=1.0, help="audio volume multiplier (default 1.0)")
     ap.add_argument("--cast", action="store_true")
     args = ap.parse_args()
 

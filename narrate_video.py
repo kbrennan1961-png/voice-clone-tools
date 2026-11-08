@@ -19,7 +19,7 @@ def main():
     ap.add_argument("--ref", required=True)
     ap.add_argument("--out", default="narrated")
     ap.add_argument("--lang", default="en")
-    ap.add_argument("--gain", type=float, default=2.5, help="audio volume multiplier (default 2.5)")
+    ap.add_argument("--gain", type=float, default=1.0, help="audio volume multiplier (default 1.0)")
     args = ap.parse_args()
 
     # 1. synthesize cloned voice

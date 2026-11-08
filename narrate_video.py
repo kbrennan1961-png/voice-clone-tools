@@ -19,6 +19,7 @@ def main():
     ap.add_argument("--ref", required=True)
     ap.add_argument("--out", default="narrated")
     ap.add_argument("--lang", default="en")
+    ap.add_argument("--gain", type=float, default=2.5, help="audio volume multiplier (default 2.5)")
     args = ap.parse_args()
 
     # 1. synthesize cloned voice
@@ -60,7 +61,7 @@ print("WAV_OK", wav)
     out_mp4 = os.path.join(SCRATCH, args.out + ".mp4")
     cmd = [FFMPEG, "-y", "-i", args.video, "-i", wav_path,
            "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
-           out_mp4]
+           "-af", f"volume={args.gain}", out_mp4]
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     print(f"FINAL: {out_mp4}")
     print(f"URL: http://{HOST}:{PORT}/{args.out}.mp4")

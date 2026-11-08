@@ -16,8 +16,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--text", required=True)
     ap.add_argument("--ref", required=True)
-    ap.add_argument("--out", default="cloned")
+    ap.add_argument("--out", default="nest_clip")
     ap.add_argument("--lang", default="en")
+    ap.add_argument("--gain", type=float, default=2.5, help="audio volume multiplier (default 2.5)")
     ap.add_argument("--cast", action="store_true")
     args = ap.parse_args()
 
@@ -61,7 +62,7 @@ def main():
     print(f"synth done in {time.time()-t0:.1f}s -> {wav_path}", flush=True)
 
     mp3_path = os.path.join(SCRATCH, args.out + ".mp3")
-    subprocess.run([FFMPEG, "-y", "-i", wav_path, "-codec:a", "libmp3lame", "-q:a", "2", mp3_path],
+    subprocess.run([FFMPEG, "-y", "-i", wav_path, "-af", f"volume={args.gain}", "-codec:a", "libmp3lame", "-q:a", "2", mp3_path],
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     print(f"mp3 -> {mp3_path}", flush=True)
     url = f"http://{HOST}:{PORT}/{args.out}.mp3"
